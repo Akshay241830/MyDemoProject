@@ -1,0 +1,50 @@
+</p>These are your Bookings</p>
+<table>
+   <thead> 
+    <tr>
+    <th>Booking ID</th>
+    <th>check_in_date</th>
+    <th>check_out_date</th>
+    <th>check_in_time</th>
+    <th>check_out_time</th>
+    <th>number_of_rooms</th>
+    <th>type_of_room</th>
+    <th>status</th>
+    <th>user_id</th>
+    <th>room_id</th>
+    </tr>
+    </thead>
+      <tr> 
+        <%@booking.each do|booking|%>
+        <td><%= booking.id %> </td>
+        <td><%= booking.check_in_date %> </td>
+        <td><%= booking.check_out_date %> </td>
+        <td><%= booking.check_in_time %> </td>
+        <td><%= booking.check_out_time %> </td>
+        <td><%= booking.number_of_rooms %> </td>
+        <td><%= booking.type_of_room %> </td>
+        <td><%= booking.status %> </td>
+        <td><%= booking.user_id %> </td>
+        <td><%= booking.room_id %> </td> 
+        <% end %>
+      </tr> 
+
+    <tbody>
+
+    </tbody>
+
+  </table>
+
+    <%# t.date "check_in_date"
+    t.date "check_out_date"
+    t.time "check_in_time"
+    t.time "check_out_time"
+    t.integer "number_of_rooms"
+    t.string "type_of_room"
+    t.string "status", default: "pending"
+    t.integer "user_id", null: false
+    t.integer "room_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_bookings_on_room_id"
+    t.index ["user_id"], name: "index_bookings_on_user_id" %>
