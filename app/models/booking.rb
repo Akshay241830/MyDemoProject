@@ -5,7 +5,7 @@ class Booking < ApplicationRecord
 
   validate :check_if_date_is_old
   validate :check_if_dates_are_valid
-  validate :check_for_overlapping_bookings
+  # validate :check_for_overlapping_bookings
 
   private
 
@@ -23,14 +23,14 @@ class Booking < ApplicationRecord
     end
   end
 
-  def check_for_overlapping_bookings
-    return if check_in_date.nil? || check_out_date.nil? || room_id.nil?
+  # def check_for_overlapping_bookings
+  #   return if check_in_date.nil? || check_out_date.nil? || room_id.nil?
 
-    overlapping_bookings = Booking.where(room_id: room_id).where.not(id: id).where('check_in_date < ? AND check_out_date > ?', check_out_date, check_in_date)
+  #   overlapping_bookings = Booking.where(room_id: room_id).where.not(id: id).where('check_in_date < ? AND check_out_date > ?', check_out_date, check_in_date)
 
-    if overlapping_bookings.exists?
-      errors.add(:base, 'The selected date range overlaps with an existing booking.')
-    end
-  end
+  #   if overlapping_bookings.exists?
+  #     errors.add(:base, 'The selected date range overlaps with an existing booking.')
+  #   end
+  # end
 
 end

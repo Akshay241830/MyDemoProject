@@ -27,23 +27,25 @@ class BookingsController < ApplicationController
     # end
 
     def create
-      ActiveRecord::Base.transaction do
+      # ActiveRecord::Base.transaction do
         @booking = Booking.new(booking_params)
         @booking.user = current_user 
-    
+          
         if @booking.save 
-          @room = Room.find(@booking.room_id)  
+          byebug
+          @room = Room.find(@booking.room_id)   
+          @type = @room.room_type
           @booking.update!(type_of_room:@room.room_type) 
           @booking.number_of_rooms = 1
-          @room.update!(status: "Booked")  # This will raise an error if it fails
-    
-          redirect_to @booking, notice: 'Booking was successfully created.'
+          # @room.update!(status: "Booked")  # This will raise an error if it fails
+         
+          redirect_to @booking
         else
           render :new
         end
-      rescue ActiveRecord::RecordInvalid
-        render :new, alert: 'Booking could not be created.'
-      end
+      # rescue ActiveRecord::RecordInvalid
+        # render :new, alert: 'Booking could not be created.'
+      # end
     end
     
   

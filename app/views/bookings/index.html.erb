@@ -1,18 +1,44 @@
-</p>These are your Bookings</p>
-<table>
-   <thead> 
+ <p>All Bookings</p>
+
+<table class="booking-table">
+  <thead>
     <tr>
-    <th>Booking ID</th>
-    <th>Booking ID</th>
-    <th>Booking ID</th>
-    <th>Booking ID</th>
-    <th>Booking ID</th>
-    <th>Booking ID</th>
-    <th>Booking ID</th>
-    <th>Booking ID</th>
-    <th>Booking ID</th>
+      <th>Booking ID</th>
+      <th>Check-in Date</th>
+      <th>Check-out Date</th>
+      <th>Check-in Time</th>
+      <th>Check-out Time</th>
+      <th>Number of Rooms</th>
+      <th>Type of Room</th>
+      <th>Status</th>
+      <th>User ID</th>
+      <th>Room ID</th>
+      <th>Actions</th>
     </tr>
-    </thead>
+  </thead>
+  <tbody>
+    <% @bookings.each do |booking| %>
+      <tr>
+        <td><%= booking.id %></td>
+        <td><%= booking.check_in_date %></td>
+        <td><%= booking.check_out_date %></td>
+        <td><%= booking.check_in_time %></td>
+        <td><%= booking.check_out_time %></td>
+        <td><%= booking.number_of_rooms %></td>
+        <td><%= booking.type_of_room %></td>
+        <td><%= booking.status %></td>
+        <td><%= booking.user_id %></td>
+        <td><%= booking.room_id %></td>
+        <td>
+          <%= link_to 'Show', booking_path(booking), class: 'btn btn-info' %>
+          <%= link_to 'Edit', edit_booking_path(booking), class: 'btn btn-warning' %>
+          <%= link_to 'Delete', booking_path(booking), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
 
 
 
