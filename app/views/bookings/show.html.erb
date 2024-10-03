@@ -1,14 +1,14 @@
-<p>Booking created succesfully</p>
+<%# <p>Booking created succesfully</p>
 <br>
 <br>
 
 <%# <%= link_to 'View All Bookings', bookings_path %> 
 
-<nav>
-  <%= link_to 'Home', root_path %>
-  <%= link_to 'View All Bookings', bookings_path %>
+<%# <nav> %>
+  <%# <%= link_to 'Home', root_path %>
+  <%# <%= link_to 'View All Bookings', bookings_path %>  
   <%# <%= link_to 'Create a New Booking', new_booking_path %>
-</nav>
+<%# </nav>  %>
 
 
     <%# t.date "check_in_date"
@@ -23,4 +23,38 @@
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["room_id"], name: "index_bookings_on_room_id"
-    t.index ["user_id"], name: "index_bookings_on_user_id" %>
+    t.index ["user_id"], name: "index_bookings_on_user_id" %> 
+
+
+
+
+  <table class="booking-table">
+  <thead>
+    <tr>
+      <th>Booking ID</th>
+      <th>Check-in Date</th>
+      <th>Check-out Date</th>
+      <th>Check-in Time</th>
+      <th>Check-out Time</th>
+      <th>Number of Rooms</th>
+      <th>Type of Room</th>
+      <th>Status</th>
+      <th>User ID</th>
+      <th>Room ID</th>
+    </tr>
+  </thead>
+  <tbody>
+      <tr>
+        <td><%= @booking.id %></td>
+        <td><%= @booking.check_in_date.strftime("%A, %B %d, %Y") %></td>
+        <td><%= @booking.check_out_date.strftime("%A, %B %d, %Y")%></td>
+        <td><%= @booking.check_in_time.strftime("%d/%m/%Y, %H:%M:%S") %></td>
+        <td><%= @booking.check_out_time.strftime("%d/%m/%Y, %H:%M:%S") %></td>
+        <td><%= @booking.number_of_rooms %></td>
+        <td><%= @booking.type_of_room %></td>
+        <td><%= @booking.status %></td>
+        <td><%= @booking.user_id %></td>
+        <td><%= @booking.room_id %></td>
+      </tr>
+  </tbody>
+</table>
