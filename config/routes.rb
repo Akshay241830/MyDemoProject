@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Defines the root path route ("/")
-  # root "articles#index" 
+  # root "articles#index"
   root "homes#index"
 
   devise_scope :user do
@@ -22,7 +22,12 @@ Rails.application.routes.draw do
     end
     resources :bookings, only: [:index, :new, :create]
   end
-   
-  resources :bookings
+   resources :bookings
 
+  resources :bookings do
+    member do
+      get :edit
+      patch :update
+    end
+  end
 end

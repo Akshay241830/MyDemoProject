@@ -10,8 +10,38 @@ class BookingsController < ApplicationController
     end 
      
     def index
-      @bookings = Booking.all
-    end
+      @bookings = current_user.bookings.all
+    end 
+     
+    # def edit
+    #   @booking = current_user.bookings.find(params[:id])
+    #   room = Room.find_by!(id: @booking.room_id)
+    #   check_in_date = .check_in_date 
+    #   check_out_date = @booking.check_out_date 
+       
+    #    hotel_id = Room.find_by!(id:@booking.room_id).hotel_id
+    #    hotel = Hotel.find_by!(id:hotel_id) 
+    #    @rooms = hotel.rooms
+
+    #   if @booking.update(booking_params)
+    #     redirect_to bookings_path, notice: 'Booking was successfully updated.'
+    #   else
+    #     render :edit
+    #   end
+    # end
+
+
+    # def update
+    #   # @booking = current_user.bookings.find(params[:id])
+    #   if 
+    #   if @booking.update(booking_params)
+    #     redirect_to bookings_path, notice: 'Booking was successfully updated.'
+    #   else
+    #     render :edit
+    #   end
+    # end
+    
+    
   
     # def create
     #   @booking = Booking.new(booking_params)
@@ -27,41 +57,46 @@ class BookingsController < ApplicationController
     # end
 
     def create
-      # ActiveRecord::Base.transaction do
+      ActiveRecord::Base.transaction do
         @booking = Booking.new(booking_params)
         @booking.user = current_user 
           
         if @booking.save 
-          byebug
+          # byebug
           @room = Room.find(@booking.room_id)   
-          @type = @room.room_type
+          # @type = @room.room_type
           @booking.update!(type_of_room:@room.room_type) 
           @booking.number_of_rooms = 1
           # @room.update!(status: "Booked")  # This will raise an error if it fails
          
-          redirect_to @booking
+          redirect_to bookings_path
         else
           render :new
         end
-      # rescue ActiveRecord::RecordInvalid
-        # render :new, alert: 'Booking could not be created.'
-      # end
+      rescue ActiveRecord::RecordInvalid
+        flash[:alert] = 'Booking could not be created.'
+        render :new
+      end
     end
     
   
-    def destroy
-      @booking = current_user.bookings.find(params[:id])
-      @booking.destroy
+    def destroy 
+      # byebug
+      @booking = current_user.bookings.find(params[:id]) 
+      @booking.update!(status:'Cancelled')
       redirect_to bookings_path, notice: 'Booking was successfully canceled.'
     end
     
-     def show
-     end
+     def show 
+      @booking = current_user.bookings.find(params[:id])
+     end 
+
     private
   
     def find_resource
       # @rooms = Rooms.where(params[:resource_id])
-      @rooms = Room.where(hotel_id: params[:hotel_id])
+      @rooms = Room.where(hotel_id: params[:hotel_id]) 
+      # if rooms .
     end
   
     def booking_params
