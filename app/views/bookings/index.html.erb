@@ -22,8 +22,8 @@
         <td><%= booking.id %></td>
         <td><%= booking.check_in_date.strftime("%A, %B %d, %Y")%></td>
         <td><%= booking.check_out_date.strftime("%A, %B %d, %Y") %></td>
-        <td><%= booking.check_in_time.strftime("%d/%m/%Y, %H:%M:%S")%></td>
-        <td><%= booking.check_out_time.strftime("%d/%m/%Y, %H:%M:%S") %></td>
+        <td><%= booking.check_in_time.strftime(" %H:%M:%S")%></td>
+        <td><%= booking.check_out_time.strftime("%H:%M:%S") %></td>
         <td><%= booking.number_of_rooms %></td>
         <td><%= booking.type_of_room %></td>
         <td><%= booking.status %></td>

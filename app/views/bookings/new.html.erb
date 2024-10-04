@@ -1,7 +1,8 @@
 <div class="container">
   <h1>Booking Form</h1>
+
   <div class="form-box">
-    <%= form_with  model:@booking,url: bookings_path, method: :post, local: true  do |f| %>
+    <%= form_with model: @booking, url: bookings_path, method: :post, local: true do |f| %>
       <div class="form-group">
         <%= f.label :check_in_date, "Check-in Date:" %>
         <%= f.date_field :check_in_date, required: true %>
@@ -25,20 +26,17 @@
       <div class="form-group">
         <%= f.label :room_id, "Select Rooms:" %>
         <div>
-          <% @rooms.where(status: "Available").each do |room| %> 
-            <% if room.bookings.where(user_id: current_user.id).empty?  %>
-            
-               <div class="form-check">
-                  <%= f.radio_button :room_id, room.id, class: 'form-check-input' %>
-                  <%= f.label "room_#{room.id}", room.room_type, class: 'form-check-label' %>
-                </div>
-            <% end %> 
+          <% @rooms.each do |room| %>
+            <% if room.bookings.where(user_id: current_user.id).empty? %>
+              <div class="form-check">
+                <%= f.radio_button :room_id, room.id, class: 'form-check-input' %> <%= room.features %>
+                <%= f.label "room_#{room.id}", room.room_type, class: 'form-check-label' %>
+              </div>
             <% end %>
+          <% end %>
         </div>
       </div>
-      <%= f.submit "Submit"%>
+      <%= f.submit "Submit" %>
     <% end %>
   </div>
-</div>
-
 </div>
