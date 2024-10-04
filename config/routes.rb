@@ -24,10 +24,10 @@ Rails.application.routes.draw do
   end
    resources :bookings
 
-  resources :bookings do
-    member do
-      get :edit
-      patch :update
-    end
-  end
+  # resources :bookings do
+  #   member do
+  #     get :edit
+  #     patch :update
+  #   end
+  # end
 end

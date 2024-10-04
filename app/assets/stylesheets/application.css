@@ -26,13 +26,16 @@
 
 .navbar {
     background-color: #333;
-    overflow: hidden;
+    overflow: hidden; 
+    /* display: flex; 
+    justify-content: end; */
 }
 
 .navbar ul {
     list-style-type: none;
-    padding: 0;
-    margin: 0;
+    /* padding: 0; */
+    margin: 0; 
+    padding-left: 1250px;
 }
 
 .navbar ul li {
