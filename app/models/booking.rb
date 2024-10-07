@@ -7,6 +7,15 @@ class Booking < ApplicationRecord
   validate :check_if_dates_are_valid 
   validate :check_for_overlapping_bookings
 
+  def self.ransackable_associations(auth_object = nil)
+    ["room", "user"]
+  end
+
+  def self.ransackable_attributes(auth_object = nil)
+    ["check_in_date", "check_in_time", "check_out_date", "check_out_time", "created_at", "id", "number_of_rooms", "room_id", "status", "type_of_room", "updated_at", "user_id"]
+  end
+
+
   private
 
   def check_if_dates_are_valid
