@@ -4,6 +4,14 @@ class Hotel < ApplicationRecord
   has_and_belongs_to_many :users
   validates :name, presence: true
   before_save :check_duplicate_record
+
+  def self.ransackable_associations(auth_object = nil)
+    ["bookings", "rooms", "users"]
+  end
+  
+  def self.ransackable_attributes(auth_object = nil)
+    ["created_at", "id", "location", "name", "updated_at"]
+  end
   
   
   private

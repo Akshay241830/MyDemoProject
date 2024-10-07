@@ -59,7 +59,10 @@ class BookingsController < ApplicationController
 
       if @booking.save
         # byebug
-        @room = Room.find(@booking.room_id)
+        @room = Room.find(@booking.room_id)  
+        hotel = Hotel.find_by(id:@room.hotel_id) 
+        @booking.update!(number_of_rooms: 1)
+        # current_user.hotels << hotel
         # @type = @room.room_type
         @booking.update!(type_of_room: @room.room_type)
         @booking.number_of_rooms = 1
@@ -71,7 +74,7 @@ class BookingsController < ApplicationController
         render :new, status: :unprocessable_entity
       end
     rescue ActiveRecord::RecordInvalid
-      byebug
+      # byebug
       flash[:alert] = 'Booking could not be created.'
       render :new
     end
@@ -99,7 +102,6 @@ class BookingsController < ApplicationController
 
   def booking_params
     # byebug
-    params.require(:booking).permit(:check_in_date, :check_out_date, :check_in_time, :check_out_time,
-                                    :number_of_rooms, :room_id)
+    params.require(:booking).permit(:check_in_date, :check_out_date, :check_in_time, :check_out_time, :room_id)
   end
 end

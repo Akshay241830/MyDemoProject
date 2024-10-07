@@ -5,7 +5,7 @@ ActiveAdmin.register Booking do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  # permit_params :check_in_date, :check_out_date, :check_in_time, :check_out_time, :number_of_rooms, :type_of_room, :status, :user_id, :room_id
+  permit_params :check_in_date, :check_out_date, :check_in_time, :check_out_time, :number_of_rooms, :type_of_room, :status, :user_id, :room_id
   #
   # or
   #

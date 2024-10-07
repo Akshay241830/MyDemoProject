@@ -16,7 +16,9 @@
 
  @import 'bookings';
 
- @import 'bookingtable';
+ @import 'bookingtable'; 
+ 
+ @import 'adminlogin';
 
  body {
     font-family: Arial, sans-serif;
