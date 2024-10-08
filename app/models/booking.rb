@@ -4,17 +4,17 @@ class Booking < ApplicationRecord
   validates :check_in_date, :check_out_date, :check_in_time, :check_out_time, presence: true
 
   validate :check_if_date_is_old
-  validate :check_if_dates_are_valid 
+  validate :check_if_dates_are_valid
   validate :check_for_overlapping_bookings
 
-  def self.ransackable_associations(auth_object = nil)
-    ["room", "user"]
+  def self.ransackable_associations(_auth_object = nil)
+    %w[room user]
   end
 
-  def self.ransackable_attributes(auth_object = nil)
-    ["check_in_date", "check_in_time", "check_out_date", "check_out_time", "created_at", "id", "number_of_rooms", "room_id", "status", "type_of_room", "updated_at", "user_id"]
+  def self.ransackable_attributes(_auth_object = nil)
+    %w[check_in_date check_in_time check_out_date check_out_time created_at id number_of_rooms
+       room_id status type_of_room updated_at user_id]
   end
-
 
   private
 
@@ -36,11 +36,8 @@ class Booking < ApplicationRecord
     return if check_in_date.nil? || check_out_date.nil? || room_id.nil?
 
     overlapping_bookings = Booking.where(room_id: room_id)
-                                  .where.not(id: id) # Exclude the current booking if updating
-                                  .where('check_in_date < ? AND check_out_date > ?', check_out_date, check_in_date)
-                                  .or(Booking.where(room_id: room_id)
-                                              .where.not(id: id)
-                                              .where('check_in_date = ? AND check_out_date = ?', check_in_date, check_out_date))
+                                  .where.not(id: id)
+                                  .where("tsrange(check_in_date, check_out_date, '[]') && tsrange(?, ?, '[]')", check_in_date, check_out_date)
 
     return unless overlapping_bookings.exists?
 
