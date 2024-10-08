@@ -2,7 +2,7 @@
   <h1>Booking Form</h1>
 
   <div class="form-box">
-    <%= form_with model: @room, url: rooms_path, method: :get, local: true do |f| %>
+    <%= form_with model: @booking, url: availability_bookings_path , method: :get, local: true do |f| %>
       <div class="form-group">
         <%= f.label :check_in_date, "Check-in Date:" %>
         <%= f.date_field :check_in_date, required: true %>
@@ -10,14 +10,6 @@
       <div class="form-group">
         <%= f.label :check_out_date, "Check-out Date:" %>
         <%= f.date_field :check_out_date, required: true %>
-      </div>
-      <div class="form-group">
-        <%= f.label :check_in_time, "Check-in Time:" %>
-        <%= f.time_select :check_in_time, required: true %>
-      </div>
-      <div class="form-group">
-        <%= f.label :check_out_time, "Check-out Time:" %>
-        <%= f.time_select :check_out_time, required: true %>
       </div>
       <%= f.submit "check availability" %>
     <% end %>

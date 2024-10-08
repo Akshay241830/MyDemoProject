@@ -1,0 +1,15 @@
+<!-- app/views/rooms/_available_rooms.html.erb -->
+<% rooms.each do |room| %>
+  <div class="room">
+    <h4><%= room.name %></h4>
+    <p>Price: <%= room.price %></p>
+
+    <%= form_with model: [room, Booking.new], local: true do |f| %>
+      <%= hidden_field_tag :check_in, check_in %>
+      <%= hidden_field_tag :check_out, check_out %>
+      <%= hidden_field_tag :user_id, current_user.id %> <!-- Assuming you need to store user_id -->
+
+      <%= f.submit "Book Room" %>
+    <% end %>
+  </div>
+<% end %>
