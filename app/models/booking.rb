@@ -1,7 +1,7 @@
 class Booking < ApplicationRecord
   belongs_to :user
   belongs_to :room
-  validates :check_in_date, :check_out_date, :check_in_time, :check_out_time, presence: true
+  validates :check_in_date, :check_out_date, presence: true
 
   validate :check_if_date_is_old
   validate :check_if_dates_are_valid

@@ -12,7 +12,7 @@ Rails.application.routes.draw do
     get 'users/sign_out' => 'devise/sessions#destroy'
   end
 
-  get 'bookings/availability', as: :availability_bookings
+  post 'bookings/availability', as: :availability_bookings
 
   resources :hotels do
     collection do
