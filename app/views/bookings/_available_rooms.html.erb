@@ -2,7 +2,9 @@
   <h1>Booking Form</h1>
 
   <div class="form-box">
-    <%= form_with model: @booking, url: availability_bookings_path , method: :get, local: true do |f| %>
+    <%= form_with model: @booking, url: availability_bookings_path , method: :post, local: true do |f| %> 
+      <%= f.hidden_field :hotel_id, value: @hotel.id %> 
+      <% byebug %>
       <div class="form-group">
         <%= f.label :check_in_date, "Check-in Date:" %>
         <%= f.date_field :check_in_date, required: true %>

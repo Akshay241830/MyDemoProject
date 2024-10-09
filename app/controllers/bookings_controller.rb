@@ -1,22 +1,40 @@
 class BookingsController < ApplicationController
   # before_action :validity_params, only: :new
   before_action :find_resource, only: %i[create new]
-
   def availability
-    check_in = params[:check_in_date]
-    check_out = params[:check_out_date]
-    @available_rooms = @rooms.select do |room|
-      room.bookings.none? do |booking|
-        # Check for overlapping dates
-        (booking.check_in_date < check_out) && (booking.check_out_date > check_in) && (booking.user_id == current_user.id)
-      end
+    # @rooms
+    # @hotel
+    check_in = Date.parse(params[:booking][:check_in_date])
+    check_out = Date.parse(params[:booking][:check_out_date])
+    @hotel = Hotel.find_by(id: params[:booking][:hotel_id])
+
+    @rooms = @hotel.rooms
+
+    byebug 
+
+    if check_in < Date.today 
+      flash[:alert] = 'Check in cannot be in past'
+    elsif check_out < Date.today   
+      flash[:alert] = 'Check out cannot be in past'
+    else  
+       
+      @available_rooms = @rooms.select do |room|
+        room.bookings.none? do |booking|
+          # Check for overlapping dates
+          (booking.check_in_date < check_out) && (booking.check_out_date > check_in) && (booking.user_id == current_user.id)
+        end
+      end 
+      
+
     end
   end
 
   def new
     @booking = Booking.new
-    @hotel = Hotel.find(params[:hotel_id]) # Ensure you fetch the hotel
-    @rooms = @hotel.rooms.all
+
+    @myroom = @rooms
+    # @hotel = Hotel.find(params[:hotel_id]) # Ensure you fetch the hotel
+    # @rooms = @hotel.rooms.all
 
     # # Fetch check_in and check_out from params, default to nil if not present
     # check_in = params[:check_in_date]
@@ -82,7 +100,6 @@ class BookingsController < ApplicationController
     @rooms = Room.where(hotel_id: params[:hotel_id])
     @hotel = Hotel.find_by(id: params[:hotel_id])
     byebug
-    # if rooms .
   end
 
   # def booking_params
