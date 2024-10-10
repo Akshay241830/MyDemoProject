@@ -19,7 +19,10 @@ Rails.application.routes.draw do
       get 'search'
     end
     resources :rooms, shallow: true do
-      resources :bookings
+      # get 'availability', on: :collection, to: 'bookings#availability', as: 'rooms_availability'
+      resources :bookings do
+        get 'availability', to: 'bookings#availability'
+      end
     end
     resources :bookings, only: %i[index new create]
   end

@@ -10,45 +10,52 @@ class BookingsController < ApplicationController
 
     @rooms = @hotel.rooms
 
-    byebug 
+    # byebug
 
-    if check_in < Date.today 
+    if check_in < Date.today
       flash[:alert] = 'Check in cannot be in past'
-    elsif check_out < Date.today   
+    elsif check_out < Date.today
       flash[:alert] = 'Check out cannot be in past'
-    else  
-       
+    else
+
+      # @available_rooms = @rooms.select do |room|
+      #   room.bookings.where("tsrange(check_in_date, check_out_date, '[]') && tsrange(?, ?, '[]')", check_in, check_out).empty?
+      # end
       @available_rooms = @rooms.select do |room|
-        room.bookings.none? do |booking|
-          # Check for overlapping dates
-          (booking.check_in_date < check_out) && (booking.check_out_date > check_in) && (booking.user_id == current_user.id)
-        end
-      end 
-      
+        room.bookings.where(
+          '(check_in_date < ? AND check_out_date > ?) OR (check_in_date = ? AND check_out_date = ?)',
+          check_out, check_in, check_in, check_out
+        ).empty?
+      end
+      byebug
+      # render :availability, locals: { available_rooms: @available_rooms }
 
     end
+
+    # redirect_to rooms_availability_hotel_rooms_path(hotel_id: @hotel.id)
+    render 'bookings/rooms_availability'
   end
 
-  def new
-    @booking = Booking.new
+  # def new
+  #   @booking = Booking.new
 
-    @myroom = @rooms
-    # @hotel = Hotel.find(params[:hotel_id]) # Ensure you fetch the hotel
-    # @rooms = @hotel.rooms.all
+  #   @myroom = @rooms
+  #   # @hotel = Hotel.find(params[:hotel_id]) # Ensure you fetch the hotel
+  #   # @rooms = @hotel.rooms.all
 
-    # # Fetch check_in and check_out from params, default to nil if not present
-    # check_in = params[:check_in_date]
-    # check_out = params[:check_out_date]
+  #   # # Fetch check_in and check_out from params, default to nil if not present
+  #   # check_in = params[:check_in_date]
+  #   # check_out = params[:check_out_date]
 
-    # @available_rooms = @rooms.select do |room|
-    #   room.bookings.none? do |booking|
-    #     # Check for overlapping dates
-    #     (booking.check_in_date < check_out) &&
-    #     (booking.check_out_date > check_in) &&
-    #     (booking.user_id == current_user.id)
-    #   end
-    # end
-  end
+  #   # @available_rooms = @rooms.select do |room|
+  #   #   room.bookings.none? do |booking|
+  #   #     # Check for overlapping dates
+  #   #     (booking.check_in_date < check_out) &&
+  #   #     (booking.check_out_date > check_in) &&
+  #   #     (booking.user_id == current_user.id)
+  #   #   end
+  #   # end
+  # end
 
   def index
     @bookings = current_user.bookings.all
@@ -99,7 +106,7 @@ class BookingsController < ApplicationController
     # @rooms = Rooms.where(params[:resource_id])
     @rooms = Room.where(hotel_id: params[:hotel_id])
     @hotel = Hotel.find_by(id: params[:hotel_id])
-    byebug
+    # byebug
   end
 
   # def booking_params
