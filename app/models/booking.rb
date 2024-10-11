@@ -5,7 +5,7 @@ class Booking < ApplicationRecord
 
   validate :check_if_date_is_old
   validate :check_if_dates_are_valid
-  validate :check_for_overlapping_bookings
+  # validate :check_for_overlapping_bookings
 
   def self.ransackable_associations(_auth_object = nil)
     %w[room user]
@@ -32,15 +32,15 @@ class Booking < ApplicationRecord
     end
   end
 
-  def check_for_overlapping_bookings
-    return if check_in_date.nil? || check_out_date.nil? || room_id.nil?
+  # def check_for_overlapping_bookings
+  #   return if check_in_date.nil? || check_out_date.nil? || room_id.nil?
 
-    overlapping_bookings = Booking.where(room_id: room_id)
-                                  .where.not(id: id)
-                                  .where("tsrange(check_in_date, check_out_date, '[]') && tsrange(?, ?, '[]')", check_in_date, check_out_date)
+  #   overlapping_bookings = Booking.where(room_id: room_id)
+  #                                 .where.not(id: id)
+  #                                 .where("tsrange(check_in_date, check_out_date, '[]') && tsrange(?, ?, '[]')", check_in_date, check_out_date)
 
-    return unless overlapping_bookings.exists?
+  #   return unless overlapping_bookings.exists?
 
-    errors.add(:base, 'The selected date range overlaps with an existing booking.')
-  end
+  #   errors.add(:base, 'The selected date range overlaps with an existing booking.')
+  # end
 end

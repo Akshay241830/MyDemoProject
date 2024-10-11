@@ -1,20 +1,32 @@
 class BookingsController < ApplicationController
   # before_action :validity_params, only: :new
-  before_action :find_resource, only: %i[create new]
+  # before_action :find_resource, only: %i[create new]
   def availability
-    # @rooms
-    # @hotel
-    check_in = Date.parse(params[:booking][:check_in_date])
-    check_out = Date.parse(params[:booking][:check_out_date])
-    @hotel = Hotel.find_by(id: params[:booking][:hotel_id])
+    @hotel = Hotel.find(params[:hotel_id])
+
+    # check_in = params[:check_in_date]
+    # check_out = params[:check_out_date]
+    # @available_rooms = @rooms.select do |room|
+    #   room.bookings.none? do |booking|
+    #     # Check for overlapping dates
+    #     (booking.check_in_date < check_out) && (booking.check_out_date > check_in) && (booking.user_id == current_user.id)
+    #   end
+    # end
+  end
+
+  def check_availability 
+    byebug
+    @hotel = Hotel.find(params[:hotel_id])
+
+    @check_in = Date.parse(params[:check_in_date])
+
+    @check_out = Date.parse(params[:check_out_date])
 
     @rooms = @hotel.rooms
 
-    # byebug
-
-    if check_in < Date.today
+    if @check_in < Date.today
       flash[:alert] = 'Check in cannot be in past'
-    elsif check_out < Date.today
+    elsif @check_out < Date.today
       flash[:alert] = 'Check out cannot be in past'
     else
 
@@ -22,43 +34,23 @@ class BookingsController < ApplicationController
       #   room.bookings.where("tsrange(check_in_date, check_out_date, '[]') && tsrange(?, ?, '[]')", check_in, check_out).empty?
       # end
       @available_rooms = @rooms.select do |room|
-        room.bookings.where(
-          '(check_in_date < ? AND check_out_date > ?) OR (check_in_date = ? AND check_out_date = ?)',
-          check_out, check_in, check_in, check_out
-        ).empty?
+        room.bookings.where('(check_in_date < ? AND check_out_date > ?) OR (check_in_date = ? AND check_out_date = ?)',
+                            @check_out, @check_in, @check_in, @check_out).empty?
       end
-      byebug
+      # byebug
       # render :availability, locals: { available_rooms: @available_rooms }
-
+      render 'bookings/check_availability'
+      # render 'bookings/custom_availability_view'
     end
-
-    # redirect_to rooms_availability_hotel_rooms_path(hotel_id: @hotel.id)
-    render 'bookings/rooms_availability'
   end
-
-  # def new
-  #   @booking = Booking.new
-
-  #   @myroom = @rooms
-  #   # @hotel = Hotel.find(params[:hotel_id]) # Ensure you fetch the hotel
-  #   # @rooms = @hotel.rooms.all
-
-  #   # # Fetch check_in and check_out from params, default to nil if not present
-  #   # check_in = params[:check_in_date]
-  #   # check_out = params[:check_out_date]
-
-  #   # @available_rooms = @rooms.select do |room|
-  #   #   room.bookings.none? do |booking|
-  #   #     # Check for overlapping dates
-  #   #     (booking.check_in_date < check_out) &&
-  #   #     (booking.check_out_date > check_in) &&
-  #   #     (booking.user_id == current_user.id)
-  #   #   end
-  #   # end
-  # end
 
   def index
     @bookings = current_user.bookings.all
+  end
+
+  def new 
+    byebug
+    @booking = Booking.new
   end
 
   def create
@@ -75,17 +67,18 @@ class BookingsController < ApplicationController
         # @type = @room.room_type
         @booking.update!(type_of_room: @room.room_type)
         @booking.number_of_rooms = 1
-        # @room.update!(status: "Booked")  # This will raise an error if it fails
+        # @room.update!(status: "Booked")
 
         redirect_to bookings_path, notice: 'Booking was successfully created.'
       else
         flash.now[:alert] = 'There was an error creating your booking.'
-        render :new, status: :unprocessable_entity
+        # render :new, status: :unprocessable_entity 
+        redirect_to availability_bookings_path, status: :unprocessable_entity
       end
     rescue ActiveRecord::RecordInvalid
       # byebug
       flash[:alert] = 'Booking could not be created.'
-      render :new
+      redirect_to availability_bookings_path
     end
   end
 
@@ -109,10 +102,12 @@ class BookingsController < ApplicationController
     # byebug
   end
 
-  # def booking_params
-  #   # byebug
-  #   params.require(:booking).permit(:check_in_date, :check_out_date, :check_in_time, :check_out_time, :room_id)
-  # end
+  def booking_params
+    
+    # params.require(:booking).permit(:check_in_date, :check_out_date, :check_in_time, :check_out_time, :room_id) 
+    params.require(:booking).permit(:check_in_date, :check_out_date, :room_id)
+    byebug
+  end
 
   def validity_params
     params.require(:room).permit(:check_in_date, :check_out_date)
