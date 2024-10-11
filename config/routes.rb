@@ -12,22 +12,43 @@ Rails.application.routes.draw do
     get 'users/sign_out' => 'devise/sessions#destroy'
   end
 
-  post 'bookings/availability', as: :availability_bookings
-
   resources :hotels do
     collection do
       get 'search'
     end
-    resources :rooms, shallow: true do
-      # get 'availability', on: :collection, to: 'bookings#availability', as: 'rooms_availability'
-      resources :bookings do
-        get 'availability', to: 'bookings#availability'
-      end
-    end
-    resources :bookings, only: %i[index new create]
+
+    # resources :rooms, shallow: true do
+    resources :bookings
+    # end
   end
 
-  resources :bookings
+  resources :bookings, only: %i[index new create] do
+    collection do
+      get 'availability', to: 'bookings#availability' # For the input form
+      get 'check_availability', to: 'bookings#check_availability' # For processing the input
+    end
+  end
+
+  # resources :hotels do
+
+  #   collection do
+  #     get 'search'
+  #   end
+  #   resources :rooms, shallow: true do
+  #     resources :bookings, shallow: true
+  #   end
+  #   # resources :bookings, only: [:index, :new, :create]
+  # end
+
+  # resources :bookings do
+  #   collection do
+  #     post 'availability', to: 'bookings#availability'  # For the input form
+  #     post 'availability', to: 'bookings#check_availability'  # For processing the input
+  #   end
+  # end
+
+  # resources :payments, only: [:new, :create]
+  # root 'payments#new'
 
   # resources :bookings do
   #   member do
@@ -35,4 +56,28 @@ Rails.application.routes.draw do
   #     patch :update
   #   end
   # end
+
+  # post 'bookings/availability', as: :availability_bookings
+
+  # resources :hotels do
+  #   collection do
+  #     get 'search'
+  #   end
+  #   resources :rooms, shallow: true do
+  #     # get 'availability', on: :collection, to: 'bookings#availability', as: 'rooms_availability'
+  #     resources :bookings do
+  #       get 'availability', to: 'bookings#availability'
+  #     end
+  #   end
+  #   resources :bookings, only: %i[index new create]
+  # end
+
+  # resources :bookings
+
+  # # resources :bookings do
+  # #   member do
+  # #     get :edit
+  # #     patch :update
+  # #   end
+  # # end
 end
