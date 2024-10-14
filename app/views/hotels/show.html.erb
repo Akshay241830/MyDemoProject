@@ -9,9 +9,26 @@
 
 <%# <%= link_to 'Book Now', new_hotel_booking_path(hotel_id: @hotel.id) %>  
 
-<%= link_to 'Check Availability', availability_bookings_path(hotel_id: @hotel.id) %>  
+<%# <%= link_to 'Check Availability', availability_bookings_path(hotel_id: @hotel.id) %>   
 
-<%# <%= link_to 'Book Now', new_hotel_room_path(hotel_id: @hotel.id)%>  
+<%# <%= link_to 'Book Now', new_hotel_room_path(hotel_id: @hotel.id)%>   
+
+
+  <div class="form-box">
+    <%= form_with url: check_availability_hotel_bookings_path(hotel_id: @hotel.id), method: :get, local: true do |f| %>
+      <%= f.hidden_field :hotel_id, value: @hotel.id %>
+      <div class="form-group">
+        <%= f.label :check_in_date, "Check-in Date:" %>
+        <%= f.date_field :check_in_date, required: true %>
+      </div>
+      <div class="form-group">
+        <%= f.label :check_out_date, "Check-out Date:" %>
+        <%= f.date_field :check_out_date, required: true %>
+      </div>
+      <%= f.submit "Check Availability", class: 'btn btn-primary' %>
+    <% end %>
+  </div>
+</div>
 
 
 

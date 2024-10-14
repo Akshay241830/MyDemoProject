@@ -1,4 +1,4 @@
- <p>All Bookings</p>
+ <h2 style="text-align: center;">All Bookings</h2>
 
 <table class="booking-table">
   <thead>
@@ -6,33 +6,34 @@
       <th>Booking ID</th>
       <th>Check-in Date</th>
       <th>Check-out Date</th>
-      <th>Check-in Time</th>
-      <th>Check-out Time</th>
       <th>Number of Rooms</th>
       <th>Type of Room</th>
       <th>Status</th>
+
       <th>Room ID</th>
-      <th colspan="4" style="text-align: center;">Actions</th>
+      <th colspan="2" style="text-align: center;">Actions</th>
     </tr>
   </thead>
   <tbody>
     <% @bookings.each do |booking| %>
       <tr>
         <td><%= booking.id %></td>
-        <td><%= booking.check_in_date.strftime("%A, %B %d, %Y")%></td>
-        <td><%= booking.check_out_date.strftime("%A, %B %d, %Y") %></td>
-        <td><%= booking.check_in_time.strftime(" %H:%M:%S")%></td>
-        <td><%= booking.check_out_time.strftime("%H:%M:%S") %></td>
+        <td><%= booking.check_in_date%></td>
+        <td><%= booking.check_out_date %></td>
+        <%# <td><%= booking.check_in_time.strftime(" %H:%M:%S")></td> %>
+        <%# <td><%= booking.check_out_time.strftime("%H:%M:%S") ></td> %>
         <td><%= booking.number_of_rooms %></td>
         <td><%= booking.type_of_room %></td>
         <td><%= booking.status %></td>
         <td><%= booking.room_id %></td>
-          <td><%= link_to 'Show', booking_path(booking.id), class: 'btn btn-info' %></td>
-          <%# <td><%= link_to 'Edit', edit_booking_path(booking.id), class: 'btn btn-warning'><td> %>
-          <td><%= link_to "Cancel", booking_path(booking.id), data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure?"
-                  },class: 'btn btn-danger' %></td>
+          <%# <td><%= link_to 'Show', bookings_path(booking.id), class: 'btn btn-info'></td> %>
+          <%# <td><%= link_to 'Edit', edit_booking_path(booking.id), class: 'btn btn-warning'><td> %> 
+          <td><%= link_to 'Show', booking_path(booking.id), class: 'btn btn-info' %></td> 
+          <td><%= link_to "Cancel",booking_path(booking.id), data: {turbo_method: :delete,turbo_confirm: "Are you sure?"}, class: 'btn btn-danger' %></td>
+          <%# <td><%= link_to "Cancel", bookings_path(booking.id), data: { >
+                    # turbo_method: :delete,
+                    # turbo_confirm: "Are you sure?"
+                  # },class: 'btn btn-danger' </td> %>
         
       </tr>
     <% end %>
