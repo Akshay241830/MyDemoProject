@@ -1,39 +1,27 @@
+<h1>Available Rooms</h1>     
+
+
 <div class="container">
   <h1>Booking Form</h1>
 
   <div class="form-box">
-    <%= form_with model: @booking, url: bookings_path, method: :post, local: true do |f| %>
-      <div class="form-group">
-        <%= f.label :check_in_date, "Check-in Date:" %>
-        <%= f.date_field :check_in_date, required: true %>
-      </div>
-      <div class="form-group">
-        <%= f.label :check_out_date, "Check-out Date:" %>
-        <%= f.date_field :check_out_date, required: true %>
-      </div>
-      <div class="form-group">
-        <%= f.label :check_in_time, "Check-in Time:" %>
-        <%= f.time_select :check_in_time, required: true %>
-      </div>
-      <div class="form-group">
-        <%= f.label :check_out_time, "Check-out Time:" %>
-        <%= f.time_select :check_out_time, required: true %>
-      </div>
-      <div class="form-group">
-        <%= f.label :number_of_rooms, "Number of Rooms:" %>
-        <%= f.number_field :number_of_rooms, required: true %>
-      </div>
+    <%= form_with model: @booking, url: hotel_bookings_path(@hotel.id), local: true do |f| %> 
+       <%# <%= f.hidden_field :hotel_id, value: @hotel.id %>  
+       <%# <%= f.hidden_field :check_in_date, value: @check_in %>   
+       <%# <%= f.hidden_field :check_out_date, value: @check_out %>  
+
+         <%= f.hidden_field :check_in_date, value: @check_in %>
+         <%= f.hidden_field :check_out_date, value: @check_out %>
+       <% byebug %>
       <div class="form-group">
         <%= f.label :room_id, "Select Rooms:" %>
         <div>
-          <% @rooms.each do |room| %>
-            <% if room.bookings.where(user_id: current_user.id).empty? %>
+          <% @available_rooms.each do |room| %>
               <div class="form-check">
                 <%= f.radio_button :room_id, room.id, class: 'form-check-input' %> <%= room.features %>
                 <%= f.label "room_#{room.id}", room.room_type, class: 'form-check-label' %>
               </div>
             <% end %>
-          <% end %>
         </div>
       </div>
       <%= f.submit "Submit" %>

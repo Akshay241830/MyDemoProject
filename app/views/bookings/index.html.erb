@@ -29,12 +29,14 @@
         <td><%= booking.status %></td>
         <td><%= booking.user_id %></td>
         <td><%= booking.room_id %></td>
-          <td><%= link_to 'Show', booking_path(booking.id), class: 'btn btn-info' %></td>
-          <%# <td><%= link_to 'Edit', edit_booking_path(booking.id), class: 'btn btn-warning'><td> %>
-          <td><%= link_to "Cancel", booking_path(booking.id), data: {
-                    turbo_method: :delete,
-                    turbo_confirm: "Are you sure?"
-                  },class: 'btn btn-danger' %></td>
+          <%# <td><%= link_to 'Show', bookings_path(booking.id), class: 'btn btn-info'></td> %>
+          <%# <td><%= link_to 'Edit', edit_booking_path(booking.id), class: 'btn btn-warning'><td> %> 
+          <td><%= link_to 'Show', hotel_booking_path(hotel_id: booking.hotel_id, id: booking.id), class: 'btn btn-info' %></td> 
+          <td><%= link_to "Cancel", hotel_booking_path(hotel_id: booking.hotel_id, id: booking.id), data: {turbo_method: :delete,turbo_confirm: "Are you sure?"}, class: 'btn btn-danger' %></td>
+          <%# <td><%= link_to "Cancel", bookings_path(booking.id), data: { >
+                    # turbo_method: :delete,
+                    # turbo_confirm: "Are you sure?"
+                  # },class: 'btn btn-danger' </td> %>
         
       </tr>
     <% end %>

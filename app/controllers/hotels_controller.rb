@@ -9,8 +9,7 @@ class HotelsController < ApplicationController
      @no_of_rooms = @hotel.rooms.count 
 
      @no_of_non_ac_rooms = @hotel.rooms.where(room_type: "Non AC",status: "Available").count
-     @no_of_ac_rooms = @hotel.rooms.where(room_type: "AC",status: "Available").count
-     
+     @no_of_ac_rooms = @hotel.rooms.where(room_type: "AC",status: "Available").count   
   end
 
 end

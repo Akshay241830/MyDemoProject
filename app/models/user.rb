@@ -4,7 +4,9 @@ class User < ApplicationRecord
   has_and_belongs_to_many :hotels
   has_many :bookings
   has_many :rooms, through: :bookings
-  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable
+  devise :database_authenticatable, :registerable, :recoverable, :rememberable, :validatable 
+  # validates :email, :presence => true, :uniqueness => true, :email_format => true 
+  # validates :email,  :presence => true, :format => Devise.email_regexp
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[created_at email encrypted_password id remember_created_at reset_password_sent_at
@@ -18,6 +20,13 @@ class User < ApplicationRecord
 
   def self.ransackable_associations(auth_object = nil)
     ["rooms", "bookings"]  # Adjust based on your actual associations
+  end 
+
+  ransacker :hotel_id do
+    Hotel.joins(:users).select(:id)
+  end 
+  def self.with_hotel_ids(ids)
+    joins(:hotels).where(hotels: { id: ids })
   end
 
   # def self.ransackable_associations(_auth_object = nil)
