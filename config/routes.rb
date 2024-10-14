@@ -10,24 +10,42 @@ Rails.application.routes.draw do
 
   devise_scope :user do
     get 'users/sign_out' => 'devise/sessions#destroy'
-  end
+  end 
 
-  resources :hotels do
-    collection do
+
+  resources :hotels do  
+    collection do 
       get 'search'
     end
-
+    
     # resources :rooms, shallow: true do
-    resources :bookings
-    # end
-  end
-
-  resources :bookings, only: %i[index new create] do
-    collection do
-      get 'availability', to: 'bookings#availability' # For the input form
-      get 'check_availability', to: 'bookings#check_availability' # For processing the input
+    resources :bookings,shallow: true do 
+       collection do
+         get 'availability', to: 'bookings#availability' # For the input form
+         get 'check_availability', to: 'bookings#check_availability' # For processing the input
+       end 
     end
-  end
+      
+
+    # end
+  end 
+
+  # resources :hotels do
+  #   collection do
+  #     get 'search'
+  #   end
+
+  #   # resources :rooms, shallow: true do
+  #   resources :bookings
+  #   # end
+  # end
+
+  # resources :bookings, only: %i[index new create] do
+  #   collection do
+  #     get 'availability', to: 'bookings#availability' # For the input form
+  #     get 'check_availability', to: 'bookings#check_availability' # For processing the input
+  #   end
+  # end
 
   # resources :hotels do
 
