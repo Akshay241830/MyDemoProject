@@ -1,0 +1,15 @@
+ Dear User,
+
+Thanks for booking a room from our app, please kindly find the details presented below and please initiate payment if booking status is pending or ignore otherwise
+
+Email => <%= current_user.email %>
+Check-in-date => <%= @booking.check_in_date %>
+Check-out-date => <%= @booking.check_out_date %>
+number-of-rooms => <%= @booking.number_of_rooms %> 
+
+Room-id => <%= @booking.room_id %> 
+Type-of-room => <%= @booking.type_of_room %>  
+Feature-of-room => <%= Room.find(@booking.room_id).features %>
+Payment => <%=Room.find(@booking.room_id).rate %>
+<%= @booking.status %>
+
