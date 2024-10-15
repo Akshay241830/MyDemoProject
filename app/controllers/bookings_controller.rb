@@ -85,7 +85,8 @@ class BookingsController < ApplicationController
     ActiveRecord::Base.transaction do
       byebug
       @booking = Booking.new(booking_params)
-      @booking.user = current_user
+      @booking.user = current_user 
+      @email = current_user.email
 
       byebug
       if @booking.save
@@ -97,7 +98,7 @@ class BookingsController < ApplicationController
         @booking.update!(type_of_room: @room.room_type)
         @booking.update!(number_of_rooms: 1)
         # @room.update!(status: "Booked")
-
+        MyBookingMailer.booking_email(@booking, @email).deliver_now
         redirect_to hotel_bookings_path, notice: 'Booking was successfully created.'
       else
         flash.now[:alert] = 'There was an error creating your booking.'
