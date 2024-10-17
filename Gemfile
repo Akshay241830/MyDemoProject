@@ -2,7 +2,11 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 
-gem "devise" 
+gem "devise"  
+
+gem 'stripe'
+gem 'dotenv-rails' # for managing environment variables securely
+
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.8", ">= 7.0.8.4"
@@ -44,7 +48,7 @@ gem "jbuilder"
 gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
-gem "bootsnap", require: false
+gem "bootsnap", require: false 
 
 # Use Sass to process CSS
 # gem "sassc-rails"

@@ -45,12 +45,9 @@ class BookingsController < ApplicationController
       ).empty?
     end
 
-    # Store available room IDs and check-in/check-out dates in session
     session[:available_rooms] = @available_rooms.map(&:id)
     session[:check_in] = @check_in
     session[:check_out] = @check_out
-
-    # Redirect to new booking action
     redirect_to new_hotel_booking_path(@hotel.id)
   end
 
@@ -70,50 +67,94 @@ class BookingsController < ApplicationController
       @check_in = session[:check_in]
       @check_out = session[:check_out]
 
-      # Clear the session after use
       session.delete(:available_rooms)
       session.delete(:check_in)
       session.delete(:check_out)
     else
-      @available_rooms = [] # No available rooms found
+      @available_rooms = []
       @check_in = nil
       @check_out = nil
     end
   end
 
-  def create
-    ActiveRecord::Base.transaction do
-      byebug
-      @booking = Booking.new(booking_params)
-      @booking.user = current_user 
-      @email = current_user.email
+  def create 
+    byebug
 
-      byebug
+    ActiveRecord::Base.transaction do
+      @booking = Booking.new(booking_params)
+      @booking.user = current_user
+      @total_days = if @booking.check_out_date == @booking.check_in_date
+                      1
+                    else
+                      (@booking.check_out_date - @booking.check_in_date).to_i
+                    end
+
       if @booking.save
-        # byebug
         @room = Room.find(@booking.room_id)
-        hotel = Hotel.find_by(id: @room.hotel_id)
-        # current_user.hotels << hotel
-        # @type = @room.room_type
+        @total_price = @room.rate * @total_days
+
         @booking.update!(type_of_room: @room.room_type)
         @booking.update!(number_of_rooms: 1)
-        # @room.update!(status: "Booked")
-        MyBookingMailer.booking_email(@booking, @email).deliver_now
-        redirect_to hotel_bookings_path, notice: 'Booking was successfully created.'
+        @booking.update!(total_price: @total_price)
+
+        # Redirect to create a payment session in PaymentsController 
+        byebug
+        redirect_to create_session_payments_path(booking_id: @booking.id)
       else
         flash.now[:alert] = 'There was an error creating your booking.'
-        render :new, status: :unprocessable_entity
+        render :new, status: :unprocessable_entity 
+        byebug
       end
     rescue ActiveRecord::RecordInvalid
-      byebug
       flash[:alert] = 'Booking could not be created.'
       render :new
     end
   end
 
+  # def create
+  #   ActiveRecord::Base.transaction do
+  #     byebug
+  #     @booking = Booking.new(booking_params)
+  #     @booking.user = current_user
+  #     @email = current_user.email
+  #     @total_days = if @booking.check_out_date == @booking.check_in_date
+  #                     1
+  #                   else
+  #                     (@booking.check_out_date - @booking.check_in_date).to_i
+  #                   end
+
+  #     byebug
+  #     if @booking.save
+  #       # byebug
+  #       @room = Room.find(@booking.room_id)
+  #       hotel = Hotel.find_by(id: @room.hotel_id)
+  #       @total_price = @room.rate * @total_days
+  #       byebug
+  #       # current_user.hotels << hotel
+  #       # @type = @room.room_type
+  #       @booking.update!(type_of_room: @room.room_type)
+  #       @booking.update!(number_of_rooms: 1)
+  #       @booking.update!(total_price: @total_price)
+  #       # @room.update!(status: "Booked")n
+  #       # session.create
+  #       # if session.pre
+  #       MyBookingMailer.booking_email(@booking, @email).deliver_now
+  #       redirect_to hotel_bookings_path, notice: 'Booking was successfully created.'
+  #     else
+  #       flash.now[:alert] = 'There was an error creating your booking.'
+  #       render :new, status: :unprocessable_entity
+  #     end
+  #   rescue ActiveRecord::RecordInvalid
+  #     byebug
+  #     flash[:alert] = 'Booking could not be created.'
+  #     render :new
+  #   end
+  # end
+
   def index
     @bookings = current_user.bookings.all
-    byebug
+    @amount =
+      byebug
   end
 
   def destroy

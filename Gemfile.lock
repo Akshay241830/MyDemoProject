@@ -110,8 +110,16 @@ GEM
       railties (>= 4.1.0)
       responders
       warden (~> 1.2.3)
+    dotenv (3.1.4)
+    dotenv-rails (3.1.4)
+      dotenv (= 3.1.4)
+      railties (>= 6.1)
     erubi (1.13.0)
-    ffi (1.17.0)
+    ffi (1.17.0-aarch64-linux-gnu)
+    ffi (1.17.0-arm-linux-gnu)
+    ffi (1.17.0-arm64-darwin)
+    ffi (1.17.0-x86-linux-gnu)
+    ffi (1.17.0-x86_64-darwin)
     ffi (1.17.0-x86_64-linux-gnu)
     formtastic (5.0.0)
       actionpack (>= 6.0.0)
@@ -276,6 +284,7 @@ GEM
     stimulus-rails (1.3.4)
       railties (>= 6.0.0)
     stringio (3.1.1)
+    stripe (13.0.0)
     thor (1.3.2)
     tilt (2.4.0)
     timeout (0.4.1)
@@ -314,6 +323,7 @@ DEPENDENCIES
   capybara
   debug
   devise
+  dotenv-rails
   importmap-rails
   jbuilder
   puma (~> 5.0)
@@ -323,6 +333,7 @@ DEPENDENCIES
   sprockets-rails
   sqlite3 (~> 1.4)
   stimulus-rails
+  stripe
   turbo-rails
   tzinfo-data
   web-console

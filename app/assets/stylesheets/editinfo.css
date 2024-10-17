@@ -1,0 +1,114 @@
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #4A90E2;
+}
+
+/* Form Container */
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Input Fields */
+.field {
+    margin-bottom: 15px;
+}
+
+.field label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #666;
+}
+
+.field input[type="email"],
+.field input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+.field input[type="email"]:focus,
+.field input[type="password"]:focus {
+    border-color: #4A90E2;
+    outline: none;
+}
+
+/* Submit Button */
+.actions {
+    text-align: center;
+}
+
+.actions input[type="submit"] {
+    background-color: #4A90E2;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.actions input[type="submit"]:hover {
+    background-color: #357ABD;
+}
+
+/* Error Messages */
+.error-messages {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}
+
+/* Cancel Account Section */
+h3 {
+    margin-top: 30px;
+    color: #D9534F;
+    text-align: center;
+}
+
+button {
+    background-color: #D9534F;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+button:hover {
+    background-color: #C9302C;
+}
+
+/* Back Link */
+a {
+    display: inline-block;
+    margin-top: 20px;
+    color: #4A90E2;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
