@@ -30,12 +30,6 @@
         <%# <td><%= booking. %>
           <%# <td><%= link_to 'Show', bookings_path(booking.id), class: 'btn btn-info'></td> %>
           <%# <td><%= link_to 'Edit', edit_booking_path(booking.id), class: 'btn btn-warning'><td> %> 
-          <td><%= link_to 'Show', booking_path(booking.id), class: 'btn btn-info' %></td> 
-          <td><%= link_to "Cancel",booking_path(booking.id), data: {turbo_method: :delete,turbo_confirm: "Are you sure?"}, class: 'btn btn-danger' %></td>
-          <%# <td><%= link_to "Cancel", bookings_path(booking.id), data: { >
-                    # turbo_method: :delete,
-                    # turbo_confirm: "Are you sure?"
-                  # },class: 'btn btn-danger' </td> %>
         
       </tr>
     <% end %>

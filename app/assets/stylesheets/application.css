@@ -20,7 +20,11 @@
  
  @import 'adminlogin';  
  @import 'signup'; 
- @import 'editinfo'; 
+ @import 'editinfo';  
+
+ @import 'hotels_search'; 
+
+ @import 'bookingtablebutton';
 
  body {
     font-family: Arial, sans-serif;

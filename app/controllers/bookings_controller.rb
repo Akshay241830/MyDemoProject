@@ -77,7 +77,7 @@ class BookingsController < ApplicationController
     end
   end
 
-  def create 
+  def create
     byebug
 
     ActiveRecord::Base.transaction do
@@ -97,12 +97,12 @@ class BookingsController < ApplicationController
         @booking.update!(number_of_rooms: 1)
         @booking.update!(total_price: @total_price)
 
-        # Redirect to create a payment session in PaymentsController 
+        # Redirect to create a payment session in PaymentsController
         byebug
         redirect_to create_session_payments_path(booking_id: @booking.id)
       else
         flash.now[:alert] = 'There was an error creating your booking.'
-        render :new, status: :unprocessable_entity 
+        render :new, status: :unprocessable_entity
         byebug
       end
     rescue ActiveRecord::RecordInvalid
@@ -152,25 +152,25 @@ class BookingsController < ApplicationController
   # end
 
   def index
-    @bookings = current_user.bookings.all
-    @amount =
-      byebug
+    byebug
+    @bookings = current_user.bookings
+    byebug
   end
 
-  def destroy
-    # @hotel = Hotel.find(params[:hotel_id]) # Find the hotel by ID
-    @booking = Booking.find(params[:id]) # Find the booking by ID
-    @room = Room.find(@booking.room_id)
-    @hotel = Hotel.find(@room.hotel_id)
-    @booking.update!(status: 'Cancelled')
+  # def destroy
+  #   # @hotel = Hotel.find(params[:hotel_id]) # Find the hotel by ID
+  #   @booking = Booking.find(params[:id]) # Find the booking by ID
+  #   @room = Room.find(@booking.room_id)
+  #   @hotel = Hotel.find(@room.hotel_id)
+  #   @booking.update!(status: 'Cancelled')
 
-    redirect_to hotel_bookings_path(@hotel.id), notice: 'Booking was successfully canceled.'
+  #   redirect_to hotel_bookings_path(@hotel.id), notice: 'Booking was successfully canceled.'
 
-    # byebug
-    # @booking = current_user.bookings.find(params[:id])
-    # @booking.update!(status: 'Cancelled')
-    # redirect_to bookings_path, notice: 'Booking was successfully canceled.'
-  end
+  #   # byebug
+  #   # @booking = current_user.bookings.find(params[:id])
+  #   # @booking.update!(status: 'Cancelled')
+  #   # redirect_to bookings_path, notice: 'Booking was successfully canceled.'
+  # end
 
   def show
     # @hotel = Hotel.find(params[:hotel_id]) # Find the hotel by ID
@@ -201,42 +201,3 @@ class BookingsController < ApplicationController
     end
   end
 end
-# def edit
-#   @booking = current_user.bookings.find(params[:id])
-#   room = Room.find_by!(id: @booking.room_id)
-#   check_in_date = .check_in_date
-#   check_out_date = @booking.check_out_date
-
-#    hotel_id = Room.find_by!(id:@booking.room_id).hotel_id
-#    hotel = Hotel.find_by!(id:hotel_id)
-#    @rooms = hotel.rooms
-
-#   if @booking.update(booking_params)
-#     redirect_to bookings_path, notice: 'Booking was successfully updated.'
-#   else
-#     render :edit
-#   end
-# end
-
-# def update
-#   # @booking = current_user.bookings.find(params[:id])
-#   if
-#   if @booking.update(booking_params)
-#     redirect_to bookings_path, notice: 'Booking was successfully updated.'
-#   else
-#     render :edit
-#   end
-# end
-
-# def create
-#   @booking = Booking.new(booking_params)
-#   @booking.user = current_user
-
-#   if @booking.save
-#     @room = Room.where(room_id: room_id)
-#     @room.status = "Booked"
-#     redirect_to @booking, notice: 'Booking was successfully created.'
-#   else
-#     render :new
-#   end
-# end

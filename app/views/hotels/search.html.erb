@@ -1,26 +1,31 @@
+       <br>
+       <br>
 
-     <%= form_with url: search_hotels_path, method: :get,local: true do |form| %>
-        <div>
-        <%=form.label :location, "Enter the location"%>
+<br>
+<br>
 
-        <%=form.text_field :location%>
-        </div>
+<%= form_with url: search_hotels_path, method: :get, local: true, class: 'search-form' do |form| %>
+  <div class="form-group">
+    <%= form.label :location, "Enter the location", class: 'form-label' %>
+    <%= form.text_field :location, class: 'form-input' %>
+  </div>
 
-        <div>
-         <%= form.submit 'Search' %>
-        </div>
-     <% end  %>
-     
-     
+  <div class="form-group">
+    <%= form.submit 'Search', class: 'form-submit' %>
+  </div>
+<% end %>
 
-     <%if @hotels.any? %>
-       <ul>
-         <h1> These are your search results </h1>
-          <%@hotels.each do |hotel|%>
-             <li><%=link_to hotel.name, hotel_path(hotel.id) %></li>
-          <% end  %>
-       </ul>
-     <% else%>
-       <p>There is no hotel with this location</p>
-     <% end  %> 
+<% if @hotels.any? %>
+  <div class="results">
+    <h1 class="results-heading">These are your search results</h1>
+    <ul class="hotel-list">
+      <% @hotels.each do |hotel| %>
+        <li class="hotel-item"><%= link_to hotel.name, hotel_path(hotel.id), class: 'hotel-link' %></li>
+      <% end %>
+    </ul>
+  </div>
+<% else %>
+  <p class="no-results">There is no hotel with this location</p>
+<% end %>
+
 

@@ -28,12 +28,15 @@ Rails.application.routes.draw do
     # end
   end
 
+  get 'bookings/index', to: 'bookings#index'
+
   # config/routes.rb
   resources :payments, only: [] do
     collection do
       get :create_session
       get :success
       get :cancel
+      get '/success/:id', to: 'payments#success'
     end
   end
 
