@@ -1,0 +1,14 @@
+<h1>payment</h1>
+     
+      <h2> <%= @hotel.name%></h2> 
+
+      <ul> 
+        <li><%=@room.room_type%></li>
+        <li><%=@room.features%></li> 
+        <li>Number of Days :<%= @total_days %></li> 
+      </ul>
+    
+       <%= number_to_currency(@total_price, unit: '$') %>
+    
+
+<a href="<%= @session.url %>" class="btn btn-primary btn-sm my-2">Pay Now</a>
