@@ -47,17 +47,20 @@ class PaymentsController < ApplicationController
     # Retrieve the Stripe session
     session = Stripe::Checkout::Session.retrieve(session_id)
 
-    payment_intent = Stripe::PaymentIntent.retrieve(session.payment_intent)
+    payment_intent = Stripe::PaymentIntent.retrieve(session.payment_intent) 
+
+    # @booking.update!()
     byebug
     charge_id = payment_intent.latest_charge
-
+    payment_intent_id = payment_intent.id
     # Retrieve the booking using session_id
 
     #  @booking = Booking.find_by(session_id: session_id)
 
     if @booking
       # Mark booking as paid
-      @booking.update!(status: 'paid')
+      @booking.update!(status: 'paid',payment_intent: payment_intent_id)
+      
 
       # Send confirmation email
       MyBookingMailer.booking_email(@booking, @booking.user.email).deliver_now
@@ -74,4 +77,33 @@ class PaymentsController < ApplicationController
     flash[:alert] = 'Payment was canceled. No booking has been created.'
     redirect_to new_booking_path
   end
+  
+  def refund 
+    byebug 
+
+    @booking = Booking.find(params[:id]) # Find the booking for which refund is to be made
+
+    if @booking.payment_intent.present?
+      # Issue the refund
+      refund = Stripe::Refund.create({
+        payment_intent: @booking.payment_intent,
+      })
+
+      # Update booking status to refunded or canceled
+      @booking.update!(status: 'refunded')
+
+      flash[:notice] = "Refund has been processed successfully." 
+      MyBookingMailer.booking_email(@booking, @booking.user.email).deliver_now
+      # redirect_to bookings_path
+      redirect_to booking_path(@booking.id)
+    else
+      flash[:alert] = "Unable to process the refund."
+      redirect_to bookings_path
+    end 
+
+  end
+
+
+
+
 end

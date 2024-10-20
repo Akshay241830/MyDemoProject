@@ -28,7 +28,11 @@ Rails.application.routes.draw do
     # end
   end
 
-  get 'bookings/index', to: 'bookings#index'
+  get '/index', to: 'bookings#index'  
+  # resources 
+
+  resources :bookings, only: [:index]
+
 
   # config/routes.rb
   resources :payments, only: [] do
@@ -37,8 +41,28 @@ Rails.application.routes.draw do
       get :success
       get :cancel
       get '/success/:id', to: 'payments#success'
+    end  
+
+    member do
+      post :refund # This should be POST, not GET
     end
+    # member do
+    #   post :refund
+    # end
+  end 
+
+  # config/routes.rb
+# resources :payments, only: [] do
+#   member do
+#     post :refund # This should be POST, not GET
+#   end
+# end
+
+
+  resources :users do
+    resources :bookings, only: [:index]
   end
+
 
   # resources :hotels do
   #   collection do

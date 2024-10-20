@@ -1,6 +1,7 @@
 class BookingsController < ApplicationController
   # before_action :validity_params, only: :new
-  # before_action :find_resource, only: %i[create new]
+  # before_action :find_resource, only: %i[create new] 
+  # before_action :authenticate_user!, only: :index
   def availability
     @hotel = Hotel.find(params[:hotel_id])
 
@@ -152,9 +153,10 @@ class BookingsController < ApplicationController
   # end
 
   def index
-    byebug
+    byebug 
+    current_user = User.find(params[:user_id])
     @bookings = current_user.bookings
-    byebug
+    # byebug
   end
 
   # def destroy
