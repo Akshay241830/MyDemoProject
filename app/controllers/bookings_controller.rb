@@ -16,7 +16,7 @@ class BookingsController < ApplicationController
   end
 
   def check_availability
-    byebug
+    # byebug
     @hotel = Hotel.find(params[:hotel_id])
     # @check_in = Date.parse(params[:check_in_date])
     # @check_out = Date.parse(params[:check_out_date])
@@ -59,7 +59,7 @@ class BookingsController < ApplicationController
   def new
     @booking = Booking.new
     @hotel = Hotel.find(params[:hotel_id])
-    byebug
+    # byebug
     if session[:available_rooms].present?
       @available_rooms = Room.where(id: session[:available_rooms])
       # @check_in = Date.parse(session[:check_in])
@@ -79,7 +79,7 @@ class BookingsController < ApplicationController
   end
 
   def create
-    byebug
+    # byebug
 
     ActiveRecord::Base.transaction do
       @booking = Booking.new(booking_params)
@@ -99,12 +99,12 @@ class BookingsController < ApplicationController
         @booking.update!(total_price: @total_price)
 
         # Redirect to create a payment session in PaymentsController
-        byebug
+        # byebug
         redirect_to create_session_payments_path(booking_id: @booking.id)
       else
         flash.now[:alert] = 'There was an error creating your booking.'
         render :new, status: :unprocessable_entity
-        byebug
+        # byebug
       end
     rescue ActiveRecord::RecordInvalid
       flash[:alert] = 'Booking could not be created.'
@@ -153,7 +153,7 @@ class BookingsController < ApplicationController
   # end
 
   def index
-    byebug 
+    # byebug 
     current_user = User.find(params[:user_id])
     @bookings = current_user.bookings
     # byebug

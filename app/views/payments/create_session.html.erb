@@ -1,14 +1,15 @@
-<h1>payment</h1>
-     
-      <h2> <%= @hotel.name%></h2> 
+<div class="container">
+  <h1>Payment</h1>
+  
+  <h2><%= @hotel.name %></h2>
 
-      <ul> 
-        <li><%=@room.room_type%></li>
-        <li><%=@room.features%></li> 
-        <li>Number of Days :<%= @total_days %></li> 
-      </ul>
-    
-       <%= number_to_currency(@total_price, unit: '₹') %>
-    
+  <ul>
+    <li><%= @room.room_type %></li>
+    <li><%= @room.features %></li>
+    <li>Number of Days: <%= @total_days %></li>
+  </ul>
 
-<a href="<%= @session.url %>" class="btn btn-primary btn-sm my-2">Pay Now</a>
+  <p class="total-price"><%= number_to_currency(@total_price, unit: '₹') %></p>
+
+  <a href="<%= @session.url %>" class="btn">Pay Now</a>
+</div>

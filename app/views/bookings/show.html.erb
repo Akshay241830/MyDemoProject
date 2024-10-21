@@ -60,7 +60,7 @@
 <div class="booking-actions"> 
   
   <!-- Link to show all bookings of the current user --> 
-  <% byebug %> 
+  <%# <% byebug %>  
   <% @room = Room.find(@booking.room_id)%>
   <%# <%= link_to 'View All My Bookings', bookings_path, class: 'btn btn-primary' %>  
   <h3> <%= link_to "View All My Bookings", "/bookings?user_id=#{@booking.user_id}",class:"btn btn-lg  btn-success text-white" %></h3>

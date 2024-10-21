@@ -1,8 +1,8 @@
 class PaymentsController < ApplicationController
   def create_session
-    byebug
+    # byebug
     @booking = Booking.find(params[:booking_id])  # Get the booking
-    byebug
+    # byebug.+-
     @total_days = if @booking.check_out_date == @booking.check_in_date
                     1
                   else
@@ -38,11 +38,11 @@ class PaymentsController < ApplicationController
   end
 
   def success 
-    byebug
+    # byebug
 
     @booking = Booking.find(params[:id])
     session_id = @booking.session_id
-    byebug
+    # byebug
 
     # Retrieve the Stripe session
     session = Stripe::Checkout::Session.retrieve(session_id)
@@ -50,7 +50,7 @@ class PaymentsController < ApplicationController
     payment_intent = Stripe::PaymentIntent.retrieve(session.payment_intent) 
 
     # @booking.update!()
-    byebug
+    # byebug
     charge_id = payment_intent.latest_charge
     payment_intent_id = payment_intent.id
     # Retrieve the booking using session_id
@@ -65,7 +65,7 @@ class PaymentsController < ApplicationController
       # Send confirmation email
       MyBookingMailer.booking_email(@booking, @booking.user.email).deliver_now
 
-      byebug
+      # byebug
 
       redirect_to booking_path(@booking.id), notice: 'Payment was successful and your booking was confirmed!'
     else
@@ -79,7 +79,7 @@ class PaymentsController < ApplicationController
   end
   
   def refund 
-    byebug 
+    # byebug 
 
     @booking = Booking.find(params[:id]) # Find the booking for which refund is to be made
 

@@ -2,10 +2,12 @@ source "https://rubygems.org"
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 
-gem "devise"  
+gem "devise"   
 
 gem 'stripe'
-gem 'dotenv-rails' # for managing environment variables securely
+gem 'dotenv-rails' # for managing environment variables securely 
+
+gem 'prawn'
 
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"

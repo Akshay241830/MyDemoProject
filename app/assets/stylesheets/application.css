@@ -25,7 +25,8 @@
  @import 'hotels_search'; 
 
  @import 'bookingtablebutton';
-
+ 
+ @import 'paymentpage';
  body {
     font-family: Arial, sans-serif;
     margin: 0;
