@@ -1,6 +1,6 @@
 <p> Dear User,</p>   
 <br> 
-<p>Thanks for booking a room from our app, please kindly find the details presented below and please initiate payment if booking status is pending or ignore otherwise</p> 
+<p>Thanks for booking a room from our app, please kindly find the details of the  presented below </p> 
 <ul>
  <li>Email => <%= @email %></li> 
  <li>Check-in-date => <%= @booking.check_in_date %></li> 
@@ -10,7 +10,7 @@
  <li>Booking-Id => <%= @booking.id %></li>  
  <li>Type-of-room => <%= @booking.type_of_room %></li>  
  <li>Feature-of-room => <%= Room.find(@booking.room_id).features %></li>  
- <% byebug %>
+ <%# <% byebug %> 
  <li>Payment => <%=Room.find(@booking.room_id).rate %></li>
  <li>Payment-status => <%= @booking.status %></li>
 

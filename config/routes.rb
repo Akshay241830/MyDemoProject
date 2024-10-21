@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     end  
 
     member do
-      post :refund # This should be POST, not GET
+      post :refund 
     end
     # member do
     #   post :refund
