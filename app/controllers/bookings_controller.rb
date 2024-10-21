@@ -44,7 +44,22 @@ class BookingsController < ApplicationController
         Date.parse(@check_in),
         Date.parse(@check_out)
       ).empty?
-    end
+    end 
+
+
+    # @available_rooms = @rooms.select do |room|
+    #   room.bookings.where(
+    #     '(check_in_date < ? AND check_out_date > ?) OR
+    #      (check_in_date = ? AND check_out_date = ?) OR
+    #      (check_in_date = ? OR check_out_date = ?)',
+    #     Date.parse(@check_out),
+    #     Date.parse(@check_in),
+    #     Date.parse(@check_in),
+    #     Date.parse(@check_out),
+    #     Date.parse(@check_in),
+    #     Date.parse(@check_out)
+    #   ).empty? || room.bookings.where.not(status: 'paid')
+    # end
 
     session[:available_rooms] = @available_rooms.map(&:id)
     session[:check_in] = @check_in

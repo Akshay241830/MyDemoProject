@@ -19,7 +19,7 @@
           <% @available_rooms.each do |room| %>
               <div class="form-check">
                 <%= f.radio_button :room_id, room.id, class: 'form-check-input' %> <%= room.features %>
-                <%= f.label "room_#{room.id}", room.room_type, class: 'form-check-label' %>  rate:-> <%= room.rate%> $   per day
+                <%= f.label "room_#{room.id}", room.room_type, class: 'form-check-label' %>  rate:-> <%= (room.rate) * 100%> rupees  per day
               </div>
             <% end %>
         </div>

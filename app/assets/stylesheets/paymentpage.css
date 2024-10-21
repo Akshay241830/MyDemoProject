@@ -42,7 +42,7 @@ ul li {
     color: #7f8c8d;
     margin-bottom: 10px;
 }
-
+/* 
 ul li::before {
     content: "•";
     color: #3498db;
@@ -50,7 +50,7 @@ ul li::before {
     display: inline-block;
     width: 1em;
     margin-left: -1em;
-}
+} */
 
 /* Price Display */
 .total-price {
