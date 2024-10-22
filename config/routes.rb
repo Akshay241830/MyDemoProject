@@ -44,7 +44,7 @@ Rails.application.routes.draw do
     end  
 
     member do
-      post :refund '..cd.'
+      post :refund 
     end
     # member do
     #   post :refund
