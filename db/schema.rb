@@ -11,13 +11,16 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema[7.0].define(version: 2024_10_20_092829) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
     t.string "resource_type"
-    t.integer "resource_id"
+    t.bigint "resource_id"
     t.string "author_type"
-    t.integer "author_id"
+    t.bigint "author_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
@@ -45,8 +48,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_20_092829) do
     t.integer "number_of_rooms"
     t.string "type_of_room"
     t.string "status", default: "pending"
-    t.integer "user_id", null: false
-    t.integer "room_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "room_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "total_price"
@@ -64,8 +67,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_20_092829) do
   end
 
   create_table "hotels_users", id: false, force: :cascade do |t|
-    t.integer "hotel_id", null: false
-    t.integer "user_id", null: false
+    t.bigint "hotel_id", null: false
+    t.bigint "user_id", null: false
     t.index ["hotel_id"], name: "index_hotels_users_on_hotel_id"
     t.index ["user_id"], name: "index_hotels_users_on_user_id"
   end
@@ -74,7 +77,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_10_20_092829) do
     t.string "room_type"
     t.string "features"
     t.string "status", default: "Available"
-    t.integer "hotel_id", null: false
+    t.bigint "hotel_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "rate"
