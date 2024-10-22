@@ -26,8 +26,8 @@ class PaymentsController < ApplicationController
         quantity: 1
       }],
       mode: 'payment',
-      success_url: "http://localhost:3000/payments/success/#{@booking.id}",
-      cancel_url: 'http://localhost:3000/payments/cancel'
+      success_url: "https://mysite-jtb3.onrender.com/payments/success/#{@booking.id}",
+      cancel_url: 'https://mysite-jtb3.onrender.com/payments/cancel'
     )
 
     # Update the booking with session_id
