@@ -13,7 +13,7 @@ class Booking < ApplicationRecord
 
   def self.ransackable_attributes(_auth_object = nil)
     %w[check_in_date check_in_time check_out_date check_out_time created_at id number_of_rooms
-       room_id status type_of_room updated_at user_id total_price session_id  `]
+       room_id status type_of_room updated_at user_id total_price session_id payment_intent`]
   end
 
   private
