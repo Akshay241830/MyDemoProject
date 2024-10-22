@@ -48,8 +48,4 @@ class RoomsController < ApplicationController
       params.require(:room).permit(:room_type, :features, :rate) # Adjust attributes as necessary
     end
   
-
-      t.string "room_type"
-    t.string "features"
-  
 end
